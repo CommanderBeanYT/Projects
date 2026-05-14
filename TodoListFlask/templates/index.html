@@ -21,13 +21,18 @@
                 {% for task in list %}
                     <div class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
-                            <input class="checkbox form-check-input" type="checkbox" {% if task.completed %}checked{% endif %}>
+                            <input id={{ task.id }} class="checkbox" type="checkbox" {% if task.completed %}checked{% endif %}>
                             <div>
                                 <h2>{{ task.title }}</h2>
                                 <p><i>{{ task.description }}</i></p>
+                                <p><strong>Due in 3 days</strong></p>
                             </div>
                         </div>
                         <button id={{ task.id }} class="btn btn-outline-danger btn-sm remove">-</button>
+                        <!--<div class="d-flex">
+                            <p><i>3 days</i></p>
+                            <button id={{ task.id }} class="btn btn-outline-danger btn-sm remove">-</button>
+                        </div>-->
                     </div>
                 {% endfor %}
             </div>

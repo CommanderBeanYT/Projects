@@ -8,7 +8,8 @@ headers = {
     "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6eGFhcmpxZHZnYnNtbW1lcm5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MTM5NzUsImV4cCI6MjA5MzQ4OTk3NX0.gZokTd52piQIsrr_NpgPgqB_PPt0PguuPwSggYMoyc8"
 }
 app = Flask(__name__)
-
+offline = False
+defaultList = [{'id': 2, 'added_at': '2026-05-07T03:05:18.148073+00:00', 'description': 'Task Example for offline mode if online and you want real data change offine = False', 'title': 'Offline example', 'due_date': None, 'completed': False}, {'id': 2, 'added_at': '2026-05-07T03:05:18.148073+00:00', 'description': 'Checked is true on this task', 'title': 'Completed', 'due_date': None, 'completed': True}]
 def get_list():
     response = requests.get(url=url, headers=headers)
     return response.json()
@@ -34,9 +35,12 @@ def index():
         print(response)
 
         return redirect(url_for('index'))
-    tasks = get_list()
-    print(tasks)
-    return render_template("index.html", list=tasks)
+    if not offline:
+        tasks = get_list()
+        print(tasks)
+        return render_template("index.html", list=tasks)
+    else:
+        return render_template("index.html", list=defaultList)
 
 
 if __name__ == "__main__":
